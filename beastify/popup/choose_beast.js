@@ -1,6 +1,6 @@
 document.addEventListener("click", function(e) {
   if (!e.target.classList.contains("beast")) {
-    console.log(document.cookie);
+    
     return;
   }
 

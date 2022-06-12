@@ -1,10 +1,16 @@
 {
   "browser_action": {
     "browser_style": true,
-    "default_title": "List cookies in the active tab",
+    "default_title": "List weekness",
     "default_popup": "inicio.html",
     "default_icon": "icons/cookie.png"
   },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content.js"]
+    }
+  ],
   "description": "List cookies in the active tab",
   "manifest_version": 2,
   "name": "Detector de Privacidade",

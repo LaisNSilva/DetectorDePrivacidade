@@ -1,42 +1,44 @@
 // Code based on https://github.com/mdn/webextensions-examples/tree/master/list-cookies
-// Show all cookies and the quantity
-function showCookiesForTab(tabs) {
+// this video helps a lot
+// https://www.youtube.com/watch?v=wjiku6X-hd8&list=PLYxzS__5yYQlWil-vQ-y7NR902ovyq1Xi&index=4
+// also the documentation from mozilla
+
+async function showLocalStorage(tabs){
+    
   let tab = tabs.pop();
 
-  var gettingAllCookies = browser.cookies.getAll({url: tab.url});
-  gettingAllCookies.then((cookies) => {
-
     var activeTabUrl = document.getElementById('header-title');
-    var text = document.createTextNode("Cookies at: " + tab.title);
+    var text = document.createTextNode("Local Storage at: " + tab.title);
     var cookieList = document.getElementById('cookie-list');
     activeTabUrl.appendChild(text);
 
-    if (cookies.length > 0) {
-      for (let cookie of cookies) {
+    const local = await browser.tabs.sendMessage(tab.id, {code: "local"})
+
+    if (local.response.length > 0) {
+      for (let localItem of local.response) {
         let li = document.createElement("li");
-        let content = document.createTextNode(cookie.name + ": "+ cookie.value);
+        let content = document.createTextNode(localItem);
         li.appendChild(content);
         cookieList.appendChild(li);
       }
 
       let quantity = document.createElement("p");
-      let quantityText = document.createTextNode("Total cookies: " + cookies.length);
+      let quantityText = document.createTextNode("Total Local Storage: " + local.response.length);
       quantity.appendChild(quantityText);
       cookieList.appendChild(quantity);
 
     } else {
       let p = document.createElement("p");
-      let content = document.createTextNode("No cookies in this tab.");
+      let content = document.createTextNode("No Local Storage in this tab.");
       let parent = cookieList.parentNode;
 
       p.appendChild(content);
       parent.appendChild(p);
     }
-  });
 }
 
 function getActiveTab() {
   return browser.tabs.query({currentWindow: true, active: true});
 }
 
-getActiveTab().then(showCookiesForTab);
+getActiveTab().then(showLocalStorage);

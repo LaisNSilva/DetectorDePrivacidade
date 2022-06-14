@@ -26,7 +26,7 @@ async function showThreats(tabs){
   let tab = tabs.pop();
 
     var activeTabUrl = document.getElementById('header-title');
-    var text = document.createTextNode("Conexions at: " + tab.title);
+    var text = document.createTextNode("Ameaças at: " + tab.title);
     var cookieList = document.getElementById('cookie-list');
     activeTabUrl.appendChild(text);
 
@@ -41,7 +41,7 @@ async function showThreats(tabs){
       }
 
       let quantity = document.createElement("p");
-      let quantityText = document.createTextNode("Total Conexions: " + tabStore.response.length);
+      let quantityText = document.createTextNode("Total Ameaças: " + tabStore.response.length);
       quantity.appendChild(quantityText);
       cookieList.appendChild(quantity);
 

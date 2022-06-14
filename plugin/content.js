@@ -1,20 +1,3 @@
-function tiraAcentos(i){
-   
-    var i = i.toLowerCase().trim();
- 
-    var acentos = "ãáàâäéèêëíìîïõóòôöúùûüç";
-    var sem_acentos = "aaaaaeeeeiiiiooooouuuuc";
-    
-    for(var x=0; x<i.length; x++){
-       var str_pos = acentos.indexOf(i.substr(x,1));
-       if(str_pos != -1){
-          i = i.replace(acentos.charAt(str_pos),sem_acentos.charAt(str_pos));
-       }
-    }
-    
-    return i;
- }
-
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.code == "local") {
         sendResponse({response: Object.entries(localStorage)})
@@ -61,6 +44,9 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         }
         
         sendResponse({response: a})
-    } 
+    } else if  (request.code == "cookie") {
+       
+            sendResponse({response: document.cookie.split(';')})
+    }
 
   });

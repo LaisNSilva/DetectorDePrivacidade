@@ -26,13 +26,12 @@ async function showQtd(tabs){
     let tab = tabs.pop();
 
     
-    const tabStore = await browser.tabs.sendMessage(tab.id, {code: "qtd"})
-      var gettingAllCookies = browser.cookies.getAll({url: tab.url});
-      var l;
-      gettingAllCookies.then((cookies) => {
-        l=cookies.length;
-      });
-    var x =  tabStore + l;
+    var tabStore = await browser.tabs.sendMessage(tab.id, {code: "tab"})
+    let tabCookies = await browser.tabs.sendMessage(tab.id, {code: "cookie"})
+    //var l = tabCookies.length;
+    
+    var x =  tabStore.response.length + tabCookies.response.length;
+    
     var cookieList = document.getElementById('pontuacao');
       if (x>150) {
         var beastImage = document.createElement("img");
